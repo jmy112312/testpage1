@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div id="background-container"></div>
+
+    <div class="login-container">
+      <h2>공사일보 시스템 접속</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <label for="companyNameLogin">업체명</label>
+          <input
+            type="text"
+            id="companyNameLogin"
+            placeholder="예: OO건설"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="roleSelect">구분</label>
+          <select id="roleSelect" required>
+            <option value="" disabled selected>역할을 선택하세요</option>
+            <option value="creator">작성자</option>
+            <option value="manager">현장소장</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="loginName">이름</label>
+          <input type="text" id="loginName" placeholder="예: 홍길동" required />
+        </div>
+        <button type="submit">접 속</button>
+        <p id="error-message" class="error-message"></p>
+      </form>
+    </div>
+    <script src="login.js"></script>
+  </body>
+</html>

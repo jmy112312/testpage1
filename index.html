@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공사일보 작성 (임시저장 기능)</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="report-container">
+      <header class="report-container__header">
+        <h1 class="report-container__title">공 사 일 보</h1>
+        <div id="real-time-clock" class="report-container__clock">
+          <div id="real-time-date"></div>
+          <div id="real-time-time"></div>
+        </div>
+      </header>
+      <section class="overview-section report-container__overview-section">
+        <h2 class="overview-section__title">1. 공사 개요</h2>
+        <table class="overview-table overview-section__table">
+          <tr class="overview-table__row">
+            <th class="overview-table__heading">작성일</th>
+            <td class="overview-table__cell">
+              <input
+                type="date"
+                id="reportDate"
+                class="overview-table__input"
+              />
+            </td>
+            <th class="overview-table__heading">현재 위치</th>
+            <td class="overview-table__cell">
+              <input
+                type="text"
+                id="location"
+                class="overview-table__input"
+                placeholder="위치 정보 로딩 중..."
+                readonly
+              />
+            </td>
+          </tr>
+          <tr class="overview-table__row">
+            <th class="overview-table__heading">현재 날씨</th>
+            <td class="overview-table__cell">
+              <input
+                type="text"
+                id="weather"
+                class="overview-table__input"
+                placeholder="날씨 정보 로딩 중..."
+                readonly
+              />
+            </td>
+            <th class="overview-table__heading">업체명</th>
+            <td class="overview-table__cell">
+              <input
+                type="text"
+                id="companyName"
+                class="overview-table__input"
+                placeholder="예: OO건설"
+              />
+            </td>
+          </tr>
+          <tr class="overview-table__row">
+            <th class="overview-table__heading">공종</th>
+            <td class="overview-table__cell">
+              <input
+                type="text"
+                id="workType"
+                class="overview-table__input"
+                placeholder="예: OO공사"
+              />
+            </td>
+            <th class="overview-table__heading">공사명</th>
+            <td class="overview-table__cell">
+              <input
+                type="text"
+                id="projectName"
+                class="overview-table__input"
+                placeholder="예: OO빌딩 신축공사"
+              />
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section class="dynamic-section report-container__personnel-section">
+        <h2 class="dynamic-section__title">2. 출력인원 현황</h2>
+        <table
+          id="personnel-table"
+          class="personnel-table dynamic-section__table"
+        >
+          <thead>
+            <tr class="personnel-table__row">
+              <th class="personnel-table__heading">구분</th>
+              <th class="personnel-table__heading">성명</th>
+              <th class="personnel-table__heading">금일 작업내용</th>
+              <th style="width: 50px" class="personnel-table__heading">삭제</th>
+            </tr>
+          </thead>
+          <tbody class="personnel-table__body"></tbody>
+        </table>
+        <button
+          type="button"
+          id="addPersonnelBtn"
+          class="btn dynamic-section__add-btn"
+        >
+          인원 추가
+        </button>
+      </section>
+
+      <section class="dynamic-section report-container__equipment-section">
+        <h2 class="dynamic-section__title">3. 사용장비 현황</h2>
+        <table
+          id="equipment-table"
+          class="equipment-table dynamic-section__table"
+        >
+          <thead>
+            <tr class="equipment-table__row">
+              <th class="equipment-table__heading">장비명</th>
+              <th class="equipment-table__heading">규격</th>
+              <th class="equipment-table__heading">금일 작업내용</th>
+              <th style="width: 50px" class="equipment-table__heading">삭제</th>
+            </tr>
+          </thead>
+          <tbody class="equipment-table__body"></tbody>
+        </table>
+        <button
+          type="button"
+          id="addEquipmentBtn"
+          class="btn dynamic-section__add-btn"
+        >
+          장비 추가
+        </button>
+      </section>
+
+      <section class="report-container__details-section">
+        <h2 class="report-container__details-title">4. 금일 공사내용</h2>
+        <textarea
+          id="workDetails"
+          rows="6"
+          class="report-container__textarea"
+          placeholder="금일 진행된 공사 내용을 상세히 기재하세요."
+        ></textarea>
+      </section>
+
+      <section class="report-container__plan-section">
+        <h2 class="report-container__plan-title">5. 명일 공사계획</h2>
+        <textarea
+          id="tomorrowPlan"
+          rows="6"
+          class="report-container__textarea"
+          placeholder="명일 진행될 공사 계획을 상세히 기재하세요."
+        ></textarea>
+      </section>
+
+      <section class="report-container__notes-section">
+        <h2 class="report-container__notes-title">6. 특기사항</h2>
+        <textarea
+          id="specialNotes"
+          rows="4"
+          class="report-container__textarea"
+          placeholder="자재 반입/반출, 안전 관련 사항 등 특이사항을 기재하세요."
+        ></textarea>
+      </section>
+
+      <section class="report-container__approval-section">
+        <table class="approval-table">
+          <thead>
+            <tr class="approval-table__row">
+              <th class="approval-table__heading">작성자</th>
+              <th class="approval-table__heading">현장소장</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="approval-table__row">
+              <td class="approval-table__cell"></td>
+              <td class="approval-table__cell"></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div id="save-timestamp" class="report-container__save-timestamp"></div>
+
+      <div class="report-container__actions">
+        <button type="button" id="logoutBtn" class="btn">로그아웃</button>
+        <button type="button" id="clearBtn" class="btn delete-btn">
+          초기화
+        </button>
+        <button
+          type="button"
+          id="saveBtn"
+          class="btn report-container__save-btn"
+        >
+          저 장
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
